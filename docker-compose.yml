@@ -1,0 +1,16 @@
+version: '3'
+services:
+  cml_jupyterlab:
+    build: .
+    restart: always # 自動起動します
+    tty : true      # コンテナが落ちないようにする
+    expose:
+      - "8888"
+    ports:          # ホストのポートとコンテナのポートを繋げます
+      - "8888:8888"
+    volumes:        # 作業フォルダをマウントします
+      - ./workspace:/workspace
+    working_dir: /workspace
+
+    command:        # 起動時のコマンドを指定します
+      jupyter-lab --ip 0.0.0.0 --allow-root --NotebookApp.token='' --port=8888 --notebook-dir=/workspace -b localhost
